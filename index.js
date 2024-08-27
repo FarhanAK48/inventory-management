@@ -1,21 +1,5 @@
-// const express = require('express');
-// const app = express();
-// const bodyParser = require('body-parser');
+
 const path = require('path');
-// const db = require('./db.config');
-// db.sequelize.sync();
-// app.use(bodyParser.json());
-// const userRoute = require('./routes/user_routes')
-// app.use('/add', userRoute);
-// app.use(express.urlencoded({extended: true}))
-// const port = 6000;
-
-
-
-// app.listen(port, ()=>{
-//     console.log('this is khan')
-// })
-
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
