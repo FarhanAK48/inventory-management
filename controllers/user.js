@@ -28,17 +28,37 @@ const addUser = (req, res) => {
     });
 };
 
-const getAllUsers = (req, res) => {
+const getAllUsers =async (req, res) => {
   // const {name,password} =  req.body;
+  const page = parseInt(req.query.page) || 1;
+  const pageSize = parseInt(req.query.pageSize) || 10;
 
-  User.findAll()
-    .then((data) => {
-      res.status(200).send(data);
-    })
-    .catch((error) => {
-      console.log("error***", error);
-      res.status(500).send({ message: "Some Error" });
+  // Calculate offset
+  const offset = (page - 1) * pageSize;
+console.log('oFF', offset)
+  try {
+    const results = await User.findAndCountAll({
+      limit: pageSize,
+      offset: offset,
     });
+
+    res.json({
+      data: results.rows,
+      totalItems: results.count,
+      totalPages: Math.ceil(results.count / pageSize),
+      currentPage: page,
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+  // User.findAll()
+  //   .then((data) => {
+  //     res.status(200).send(data);
+  //   })
+  //   .catch((error) => {
+  //     console.log("error***", error);
+  //     res.status(500).send({ message: "Some Error" });
+  //   });
 };
 
 function updateUser(req, res) {
