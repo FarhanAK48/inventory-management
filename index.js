@@ -5,6 +5,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = 3000;
 const db = require('./db.config');
+const fs = require('fs');
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname , 'view'))
 
@@ -21,7 +22,7 @@ app.use('/api/supplier', suppliersRoute);
 app.use('/api/product', productRoute);  
 app.use('/api/transaction', transactionRoute);  
 db.sequelize.sync();
-
+fs.writeFileSync('./test.txt','This is dummy data')
 app.get('/', (req, res) => {
     res.render("views");
 });

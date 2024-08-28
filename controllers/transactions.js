@@ -16,7 +16,10 @@ const createTranasction = (req,res)=>{
 }
 
 const getAllTranasctions = (req,res)=>{   
-    Transactions.findAll({order : [['quantity', 'ASC']]}).then((result)=>{
+    Transactions.findAll( {order : [['quantity', 'ASC']],   include: [
+        { model: Products, as: 'product' },
+        { model: Suppliers, as: 'supplier' }
+      ]}).then((result)=>{
         res.status(201).send(result);
     }).catch((err)=>{
         res.status(500).send(err)
